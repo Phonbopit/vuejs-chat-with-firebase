@@ -1,6 +1,6 @@
-# vuejs-chat-firebase
+# [Vue Chat](https://phonbopit.github.io/vuejs-chat-with-firebase/)
 
-> Chat Application with Vue.js + Firebase
+> Chat Application with Vue.js + Firebase [DEMO](https://phonbopit.github.io/vuejs-chat-with-firebase/)
 
 ![Screenshot](screenshot.png)
 
@@ -25,10 +25,3 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-
-## Tutorial
-
-```
-npm install vuefire firebase --save
-```

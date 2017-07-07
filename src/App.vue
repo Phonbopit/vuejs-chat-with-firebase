@@ -1,7 +1,6 @@
 <template>
   <div id="app">
 
-
     <section class="hero is-success">
       <div class="hero-body">
         <div class="container">
@@ -10,7 +9,6 @@
         </div>
       </div>
     </section>
-
 
     <section class="section chat-container">
       <div class="container">
