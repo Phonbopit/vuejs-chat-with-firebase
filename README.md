@@ -2,6 +2,8 @@
 
 > Chat Application with Vue.js + Firebase
 
+![Screenshot](screenshot.png)
+
 ## Build Setup
 
 ``` bash
