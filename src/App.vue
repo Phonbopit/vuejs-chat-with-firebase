@@ -56,7 +56,6 @@
 
 <script>
 import Firebase from 'firebase'
-import Hello from './components/Hello'
 import config from '../firebase.token'
 
 const app = Firebase.initializeApp(config)

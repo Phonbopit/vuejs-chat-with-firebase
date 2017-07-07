@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import VueFire from 'vuefire'
 import App from './App'
+import ChatApp from './components/ChatApp'
 
 Vue.config.productionTip = false
 
@@ -11,6 +12,6 @@ Vue.use(VueFire)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  template: '<App/>',
-  components: { App }
+  template: '<App />',
+  components: { App, ChatApp }
 })
