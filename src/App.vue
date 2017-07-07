@@ -1,17 +1,21 @@
 <template>
   <div id="app">
+
+
     <section class="hero is-success">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">Vue Chat</h1>
-          <h2>Vue.js & Firebase Example</h2>
+          <h1 class="title">{{ title }}</h1>
+          <h2>{{ subtitle }}</h2>
         </div>
       </div>
     </section>
+
+
     <section class="section chat-container">
       <div class="container">
         <div class="columns">
-          <div class="box column is-half is-offset-one-quarter">
+          <div class="box column is-8 is-offset-2">
             <h2 class="title">Chatbox</h2>
             <div class="chat-messages has-text-left">
               <ul v-for="chat in chats">
@@ -20,6 +24,9 @@
             </div>
             <form id="form" v-on:submit.prevent="addMessage">
               <div class="field has-addons">
+                <p class="control">
+                  <input class="input" type="text" v-model="newMessage.name">
+                </p>
                 <p class="control is-expanded">
                   <input class="input" type="text" placeholder="Add a message" v-model="newMessage.message">
                 </p>
@@ -29,9 +36,14 @@
               </div>
             </form>
           </div>
+          <div class="column is-1">
+            <span class="tag is-danger clear-chat" v-on:click="clearChat">x</span>
+          </div>
         </div>
       </div>
     </section>
+
+
     <footer class="footer">
       <div class="container">
         <div class="content has-text-centered">
@@ -43,37 +55,41 @@
 </template>
 
 <script>
+import Firebase from 'firebase'
 import Hello from './components/Hello'
+import config from '../firebase.token'
+
+const app = Firebase.initializeApp(config)
+const db = app.database()
+let chatsRef = db.ref('chats')
 
 export default {
   name: 'app',
 
-  components: {
-    Hello
+  firebase: {
+    chats: chatsRef
   },
 
   data() {
     return {
+      title: 'Vue Chat',
+      subtitle: 'Chat Application with Vue.js + Firebase',
       newMessage: {
-        name: '',
+        name: 'Chuck Norris',
         message: ''
-      },
-
-      chats: [{
-        name: 'Jack',
-        message: 'Hello How are you?'
-      }, {
-        name: 'John',
-        message: 'What is that?'
-      }, {
-        name: 'Jim',
-        message: "I don't know"
-      }]
+      }
     }
   },
 
   methods: {
+    addMessage() {
+      chatsRef.push(this.newMessage)
+      this.newMessage.message = ''
+    },
 
+    clearChat() {
+      chatsRef.remove()
+    }
   }
 }
 </script>
@@ -89,10 +105,11 @@ body {
   text-align: center;
 }
 
-.chat-messages {
-  ul, form {
-    padding: 10px;
-  }
+.chat-messages ul, form {
+  padding: 10px;
 }
 
+.clear-chat {
+  cursor: pointer;
+}
 </style>

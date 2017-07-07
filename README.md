@@ -8,6 +8,10 @@
 # install dependencies
 npm install
 
+# Setup firebase config env, 
+# then change firebase token from firebase console.
+cp firebase.token.example.js firebase.token.js
+
 # serve with hot reload at localhost:8080
 npm run dev
 
@@ -19,3 +23,10 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+## Tutorial
+
+```
+npm install vuefire firebase --save
+```
