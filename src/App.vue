@@ -16,8 +16,13 @@
           <div class="box column is-8 is-offset-2">
             <h2 class="title">Chatbox</h2>
             <div class="chat-messages has-text-left">
-              <ul v-for="chat in chats">
-                <li><strong>{{chat.name}} : </strong>{{chat.message}}</li>
+              <ul v-bind:key="chat" v-for="chat in chats">
+                  <li class="chat-message">
+                    <strong>{{ chat.name }} : </strong>
+                    <input class="input" type="text" v-if="chat.isEditable" v-on:keyup.enter="editChat(chat)" v-model="chat.message"><span v-else>{{ chat.message }}</span>
+                    <span class="tag is-info is-hover" v-on:click="clickEdit(chat)">Edit</span>
+                    <span class="tag is-danger is-hover" v-on:click="deleteMessage(chat)">Del</span>
+                  </li>
               </ul>
             </div>
             <form id="form" v-on:submit.prevent="addMessage">
@@ -35,7 +40,7 @@
             </form>
           </div>
           <div class="column is-1">
-            <span class="tag is-danger clear-chat" v-on:click="clearChat">x</span>
+            <span class="tag is-danger clear-chat" v-on:click="clearChat">Clear</span>
           </div>
         </div>
       </div>
@@ -46,6 +51,7 @@
       <div class="container">
         <div class="content has-text-centered">
           <p>Powered by <a href="https://devahoy.com" target="_blank">DevAhoy</a></p>
+          <p>Source Code : <a href="https://github.com/Phonbopit/psru-vue-chat-workshop">https://github.com/Phonbopit/psru-vue-chat-workshop</a></p>
         </div>
       </div>
     </footer>
@@ -73,8 +79,10 @@ export default {
       subtitle: 'Chat Application with Vue.js + Firebase',
       newMessage: {
         name: 'Chuck Norris',
-        message: ''
-      }
+        message: '',
+        isEditable: false
+      },
+      editMessage: ''
     }
   },
 
@@ -86,6 +94,19 @@ export default {
 
     clearChat() {
       chatsRef.remove()
+    },
+
+    clickEdit(chat) {
+      chatsRef.child(chat['.key']).child('isEditable').set(true);
+    },
+
+    editChat(chat) {
+      chatsRef.child(chat['.key']).child('message').set(chat.message)
+      chatsRef.child(chat['.key']).child('isEditable').set(false)
+    },
+
+    deleteMessage(message) {
+      chatsRef.child(message['.key']).remove()
     }
   }
 }
@@ -107,6 +128,19 @@ body {
 }
 
 .clear-chat {
+  cursor: pointer;
+}
+
+.is-hover {
+  display: none;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.chat-message:hover .is-hover {
+  animation: fadein 1s;
+  display: inline;
   cursor: pointer;
 }
 </style>
